@@ -39,10 +39,9 @@ if (!isset($_SESSION['admin_id'])) {
     </div>
 <?php endif; ?>
 
-<div class="container"> 
-
+<div class="container mt-5">
     <nav>
-        <ul class="nav">
+        <ul class="nav mb-4">
             <li class="nav-item">
                 <a class="nav-link" href="dashboard.php">Home</a>
             </li>
@@ -50,56 +49,91 @@ if (!isset($_SESSION['admin_id'])) {
                 <a class="nav-link" href="members.php">Members</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
+                <a class="nav-link" href="trainers.php">Trainers</a>
             </li>
         </ul>
     </nav>
 
-    <div class="row mb-5">
+    <div class="row">
         <div class="col-md-6">
-            <h2>Register member</h2>
-            <form action="Models/register_member.php" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="first_name">First Name:</label>
-                    <input type="text" name="first_name" id="first_name" class="form-control">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>Register Member</h4>
                 </div>
-                <div class="form-group">
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" name="last_name" id="last_name" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="text" name="email" id="email" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="phone_number">Phone Number:</label>
-                    <input type="text" name="phone_number" id="phone_number" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="training_plan_id">Training Plan:</label>
-                    <select name="training_plan_id" id="training_plan_id" class="form-control">
-                        <?php
-                        $db = new Database();
-                        $database = $db->database;
-                        $result = $database->query("SELECT * FROM training_plans");
+                <div class="card-body">
+                    <form action="Models/register_member.php" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="first_name">First Name:</label>
+                            <input type="text" name="first_name" id="first_name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" name="last_name" id="last_name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number:</label>
+                            <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="training_plan_id">Training Plan:</label>
+                            <select name="training_plan_id" id="training_plan_id" class="form-control" required>
+                                <?php
+                                $db = new Database();
+                                $database = $db->database;
+                                $result = $database->query("SELECT * FROM training_plans");
 
-                        if ($result->num_rows > 0) {
-                            $assocs = $result->fetch_all(MYSQLI_ASSOC);
-                            foreach ($assocs as $row) {
-                                $id = $row['plan_id'];
-                                $name = $row['name'];
-                                echo "<option value=\"$id\">$name</option>";
-                            }
-                        } else {
-                            echo "<option disabled>No training plans found.</option>";
-                        }
-                        ?>
-                    </select>
+                                if ($result->num_rows > 0) {
+                                    $assocs = $result->fetch_all(MYSQLI_ASSOC);
+                                    foreach ($assocs as $row) {
+                                        $id = $row['plan_id'];
+                                        $name = $row['name'];
+                                        echo "<option value=\"$id\">$name</option>";
+                                    }
+                                } else {
+                                    echo "<option disabled>No training plans found.</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <input type="hidden" name="photo_path" id="photoPathInput">
+                        <div id="dropzone-upload" class="dropzone"></div>
+                        <button class="btn btn-primary mt-3" type="submit">Register Member</button>
+                    </form>
                 </div>
-                <input type="hidden" name="photo_path" id="photoPathInput">
-                <div id="dropzone-upload" class="dropzone"></div>
-                <button class="btn btn-primary mt-3" type="submit">Register member</button>
-            </form>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4>Register Trainer</h4>
+                </div>
+                <div class="card-body">
+                    <form action="Models/register_trainer.php" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="fullName">Full Name:</label>
+                            <input type="text" name="fullName" id="fullName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" name="last_name" id="last_name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone Number:</label>
+                            <input type="text" name="phone_number" id="phone_number" class="form-control" required>
+                        </div>
+                        <button class="btn btn-success mt-3" type="submit">Register Trainer</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
