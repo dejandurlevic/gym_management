@@ -115,7 +115,7 @@ if (!isset($_SESSION['admin_id'])) {
                 <div class="card-body">
                     <form action="Models/register_trainer.php" method="POST" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="fullName">Full Name:</label>
+                            <label for="fullName">First Name:</label>
                             <input type="text" name="fullName" id="fullName" class="form-control" required>
                         </div>
                         <div class="form-group">
